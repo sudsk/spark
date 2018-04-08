@@ -47,7 +47,32 @@ Let’s go into the master machine and start it in the “master” mode. We jus
 ```
 $ ./sbin/start-master.sh
 ```
-It should start sparkMaster service on port 7077, service 'MasterUI' on port 8080, and standalone REST server for submitting applications on port 6066.
+It should usually start sparkMaster on port 7077, 'MasterUI' on port 8080, and standalone REST server for submitting applications on port 6066.
 
 ### On worker VM
 
+You can start one or more workers and connect them to the master via:
+```
+./sbin/start-slave.sh <master-spark-URL>
+```
+<master-spark-URL> in above case is <master-host-GCP-internal-ip>:7077.
+
+## Running an application on the cluster
+
+Now that the cluster is all set up, let’s give it a spin. We are going to run an application and see if it runs on both the machines. Run the following command on master node:
+
+```
+./bin/spark-submit --master spark://master-host-GCP-internal-ip:7077 examples/src/main/python/pi.py 14
+```
+
+## Stopping
+
+Stop slave
+```
+./sbin/stop-slave.sh
+```
+
+Stop master
+```
+./sbin/stop-master.sh
+```
