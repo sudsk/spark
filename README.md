@@ -1,6 +1,10 @@
 # Standalone Spark cluster install on VMs (EC2, GCP, etc)
 
+This document shows how to setup a simple standalone spark cluster using two nodes - master and a worker (slave). This can be repeated for any number of workers as desired. In future will look at scripting this. 
+
 ## Master & Worker VMs
+
+In each VM follow the below steps. You could also do so on one VM and then clone it into as many worker VMs as required.
 
 **Install Java**
 ```
@@ -67,12 +71,12 @@ Now that the cluster is all set up, let’s give it a spin. We are going to run 
 
 ## Stopping
 
-Stop slave
+On worker nodes, stop slave -
 ```
 ./sbin/stop-slave.sh
 ```
 
-Stop master
+On master nodes, stop master
 ```
 ./sbin/stop-master.sh
 ```
