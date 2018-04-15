@@ -1,4 +1,4 @@
-# Standalone Spark cluster install on VMs (EC2, GCP, etc)
+# Standalone Spark cluster install on VMs (GCP, etc)
 
 This document shows how to setup a simple standalone spark cluster using two nodes - master and a worker (slave). This can be repeated for any number of workers as desired. In future will look at scripting this. 
 
@@ -133,5 +133,18 @@ export exmem=1000M
 export drmem=6400M
 PYSPARK_DRIVER_PYTHON=jupyter PYSPARK_DRIVER_PYTHON_OPTS="notebook --no-browser --port=7777 --ip=0.0.0.0" pyspark --master spark://$spark_master_hostname:7077 --executor-memory $exmem --driver-memory $drmem
 ```
+
+Run jupyter
+```
+./jupyter-run.sh
+```
+
+## Run some spark job
+
+Open the browser link - http://0.0.0.0:7777/?token=sdsa5
+
+Create a new python notebook.
+
+Check spark UI - http://spark-master-UI:8080 and it should have a new PySparkShell application under Running Applications tab.
 
 
