@@ -147,4 +147,30 @@ Create a new python notebook.
 
 Check spark UI - http://spark-master-UI:8080 and it should have a new PySparkShell application under Running Applications tab.
 
+We can test out a few commands to make sure that we have a connection to our Spark cluster.
+
+We’ll start by seeing if we can access the Spark Context which represents the gateway into the Spark API:
+
+```
+sc
+
+SparkContext
+
+Spark UI
+
+Version
+v2.3.0
+Master
+spark://<host>:7077
+AppName
+PySparkShell
+```
+
+```
+sqlCtx
+
+<pyspark.sql.context.SQLContext at 0x7f3310bc6410>
+```
+
+```
 
