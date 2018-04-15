@@ -80,3 +80,58 @@ On master nodes, stop master
 ```
 ./sbin/stop-master.sh
 ```
+
+## Setup Spark Home and environment variables
+
+Create /home/spark
+```
+mkdir /home/spark 
+```
+Copy . files from google user directory to spark home directory.
+```
+.bashrc
+.bash_logout
+.profile
+.bash_history
+.viminfo
+```
+Edit /home/spark/.bashrc and add environment variables
+```
+export SPARK_HOME=/usr/share/spark-2.3.0-bin-hadoop2.7
+export PATH=$PATH:$SPARK_HOME/bin:$SPARK_HOME/sbin
+```
+Ensure /etc/passwd and /etc/group has below spark user entries:
+```
+spark:x:1001:1002::/home/spark:/bin/bash
+```
+```
+google-sudoers:x:1000:<google user>,spark
+spark:x:1002:
+```
+Change ownership of /home/spark to spark user
+```
+cd /home
+sudo chown -R spark:spark spark
+```
+
+## Install Jupyter
+```
+sudo apt-get install python-dev python-pip python-numpy python-scipy python-pandas gfortran
+sudo pip install nose "ipython[notebook]"
+```
+
+Add below to .bashrc
+```
+export PYTHONPATH=$SPARK_HOME/python:$SPARK_HOME/python/lib/py4j-0.10.6-src.zip:$PYTHONPATH
+```
+
+Create a jupyter run script
+```
+cat jupyter-run.sh
+export spark_master_hostname=spark-master-1.c.deep-tracer-200319.internal
+export exmem=1000M 
+export drmem=6400M
+PYSPARK_DRIVER_PYTHON=jupyter PYSPARK_DRIVER_PYTHON_OPTS="notebook --no-browser --port=7777 --ip=0.0.0.0" pyspark --master spark://$spark_master_hostname:7077 --executor-memory $exmem --driver-memory $drmem
+```
+
+
